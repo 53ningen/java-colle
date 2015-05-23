@@ -43,4 +43,11 @@ public interface ImmutableList<A> {
         return l.length();
     }
 
+    static <A> A get(final ImmutableList<A> l, final int n) {
+        if (l == null || n < 0) throw new IllegalArgumentException();
+        if (n > l.length() - 1) throw new IndexOutOfBoundsException();
+        if (n == 0) return l.head();
+        return get(l.tail(), n - 1);
+    }
+
 }

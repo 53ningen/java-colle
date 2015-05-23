@@ -9,14 +9,14 @@ public class SinglyLinkedListTest {
 
     @Test
     public void testCreateEmptyList() {
-        assertThat(SinglyLinkedList.of(), is(SinglyLinkedList.Nil.get()));
+        assertThat(SinglyLinkedList.of(), is(SinglyLinkedList.nil()));
     }
 
     @Test
     public void testCreateOneElementList() {
         final ImmutableList<String> l = SinglyLinkedList.of("single elem");
         assertThat(l.head(), is("single elem"));
-        assertThat(l.tail(), is(SinglyLinkedList.Nil.get()));
+        assertThat(l.tail(), is(SinglyLinkedList.nil()));
     }
 
     @Test
@@ -27,7 +27,7 @@ public class SinglyLinkedListTest {
         assertThat(l.tail().tail().head(), is(3));
         assertThat(l.tail().tail().tail().head(), is(4));
         assertThat(l.tail().tail().tail().tail().head(), is(5));
-        assertThat(l.tail().tail().tail().tail().tail(), is(SinglyLinkedList.Nil.get()));
+        assertThat(l.tail().tail().tail().tail().tail(), is(SinglyLinkedList.nil()));
     }
 
     @Test

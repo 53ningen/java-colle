@@ -9,23 +9,16 @@ public class SinglyLinkedList<A> implements ImmutableList<A> {
 
     @SafeVarargs
     static <A> ImmutableList<A> of(final A... elems) {
-        if (elems == null || elems.length == 0) return Nil.get();
-        if (elems.length == 1) return Cons.of(elems[0], Nil.get());
+        if (elems == null || elems.length == 0) return nil();
+        if (elems.length == 1) return Cons.of(elems[0], nil());
         return Cons.of(elems[0], of(Arrays.copyOfRange(elems, 1, elems.length)));
     }
 
-    static class Nil<A> implements ImmutableList<A> {
-
-        private Nil() {
-        }
-
-        static <A> ImmutableList<A> get() {
-            return new Nil<>();
-        }
+    private final static ImmutableList<Object> Nil = new ImmutableList<Object>() {
 
         @Override
         public boolean equals(final Object o) {
-            return this == o || o instanceof Nil;
+            return this == o;
         }
 
         @Override
@@ -33,6 +26,11 @@ public class SinglyLinkedList<A> implements ImmutableList<A> {
             return "Nil{}";
         }
 
+    };
+
+    @SuppressWarnings("unchecked")
+    static <B> ImmutableList<B> nil() {
+        return (ImmutableList) Nil;
     }
 
     static class Cons<A> implements ImmutableList<A> {
@@ -71,7 +69,7 @@ public class SinglyLinkedList<A> implements ImmutableList<A> {
         }
 
         static <A> ImmutableList<A> of(final A head, final ImmutableList<A> tail) {
-            if (head == null && (tail == null || tail.isEmpty())) return Nil.get();
+            if (head == null && (tail == null || tail.isEmpty())) return nil();
             if (head == null) return tail;
             return new Cons<>(head, tail);
         }
