@@ -25,7 +25,7 @@ public class DoubleStack {
     public static State<DoubleStack, Double> pop = new State<DoubleStack, Double>() {
         @Override
         public Function<DoubleStack, Tuple<Double, DoubleStack>> runState() {
-            return s -> Tuple.of(s.stack.head(), of(s.stack.tail()));
+            return s -> Tuple.of(s.stack.head(), DoubleStack.of(s.stack.tail()));
         }
     };
 

@@ -37,9 +37,15 @@ public class IntStack {
 
     public static Function<IntStack, Tuple<Integer, IntStack>> pop = s -> Tuple.of(s.stack.head(), IntStack.of(s.stack.tail()));
 
+    public static State<IntStack, Integer> sPop = State.of(s -> Tuple.of(s.stack.head(), IntStack.of(s.stack.tail())));
+
     public static Function<IntStack, Tuple<Integer, IntStack>> peek = s -> Tuple.of(s.stack.head(), s);
 
+    public static State<IntStack, Integer> sPeek = State.of(s -> Tuple.of(s.stack.head(), s));
+
     public static Function<Integer, Function<IntStack, Tuple<Tuple0, IntStack>>> push = a -> s -> Tuple.of(Tuple0.unit, IntStack.of(prepend(a, s.stack)));
+
+    public static Function<Integer, State<IntStack, Tuple0>> sPush = a -> State.of(s -> Tuple.of(Tuple0.unit, IntStack.of(prepend(a, s.stack))));
 
     public static Tuple<Integer, IntStack> pop(@Nonnull final IntStack intStack) {
         return Tuple.of(intStack.stack.head(), of(intStack.stack.tail()));

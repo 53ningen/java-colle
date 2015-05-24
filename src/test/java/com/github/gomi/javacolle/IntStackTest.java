@@ -41,7 +41,7 @@ public class IntStackTest {
     public void testFlatMap() {
         assertThat(flatMap(pop, push.apply(1)).apply(IntStack.of(0)).snd(), is(IntStack.of(1)));
         assertThat(flatMap(State.of(push.apply(1)), State.of(push.apply(2))).runState().apply(IntStack.of()).snd(), is(IntStack.of(2, 1)));
-        assertThat(State.of(pop).flatMap(State.of(pop)).flatMap(State.of(pop)).runState().apply(IntStack.of(1, 2, 3, 4, 5)).snd(), is(IntStack.of(4, 5)));
+        assertThat(State.of(pop).flatMap(pop).flatMap(pop).runState().apply(IntStack.of(1, 2, 3, 4, 5)).snd(), is(IntStack.of(4, 5)));
     }
 
 }

@@ -19,4 +19,8 @@ public interface State<S, A> {
         return State.of(t -> f.runState().apply(this.runState().apply(t).snd()));
     }
 
+    default <B> State<S, B> flatMap(final Function<S, Tuple<B, S>> f) {
+        return flatMap(of(f));
+    }
+
 }
