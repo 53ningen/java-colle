@@ -9,6 +9,9 @@ java-colle
 
 ### 実装したもの
 
-* Tuple
+* Tuple0
+* Tuple1
+* Tuple2
 * ImmutableList
 * Maybe
+* IntStack
