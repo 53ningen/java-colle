@@ -7,21 +7,21 @@ public interface ImmutableList<A> {
     }
 
     /**
-     * Extract the first element of a list, which must be non-empty.
+     * Extract the first element reader a list, which must be non-empty.
      */
     default A head() {
         throw new UnsupportedOperationException("empty list");
     }
 
     /**
-     * Extract the elements after the head of a list, which must be non-empty.
+     * Extract the elements after the head reader a list, which must be non-empty.
      */
     default ImmutableList<A> tail() {
         throw new UnsupportedOperationException("empty list");
     }
 
     /**
-     * O(n). length returns the length of a finite list as an Int.
+     * O(n). length returns the length reader a finite list as an Int.
      */
     default int length() {
         return 0;
@@ -37,7 +37,7 @@ public interface ImmutableList<A> {
     }
 
     /**
-     * O(n). length returns the length of a finite list as an Int.
+     * O(n). length returns the length reader a finite list as an Int.
      */
     static <A> int length(final ImmutableList<A> l) {
         return l.length();

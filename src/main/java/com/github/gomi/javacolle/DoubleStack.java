@@ -25,21 +25,21 @@ public class DoubleStack {
     public static State<DoubleStack, Double> pop = new State<DoubleStack, Double>() {
         @Override
         public Function<DoubleStack, Tuple<Double, DoubleStack>> runState() {
-            return s -> Tuple.of(s.stack.head(), DoubleStack.of(s.stack.tail()));
+            return s -> Tuple.tuple(s.stack.head(), DoubleStack.of(s.stack.tail()));
         }
     };
 
     public static State<DoubleStack, Double> peek = new State<DoubleStack, Double>() {
         @Override
         public Function<DoubleStack, Tuple<Double, DoubleStack>> runState() {
-            return s -> Tuple.of(s.stack.head(), s);
+            return s -> Tuple.tuple(s.stack.head(), s);
         }
     };
 
     public static Function<Double, State<DoubleStack, Tuple0>> push = a -> new State<DoubleStack, Tuple0>() {
         @Override
         public Function<DoubleStack, Tuple<Tuple0, DoubleStack>> runState() {
-            return s -> Tuple.of(Tuple0.unit, s);
+            return s -> Tuple.tuple(Tuple0.unit, s);
         }
     };
 

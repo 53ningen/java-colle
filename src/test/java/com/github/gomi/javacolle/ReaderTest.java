@@ -2,6 +2,7 @@ package com.github.gomi.javacolle;
 
 import org.junit.Test;
 
+import static com.github.gomi.javacolle.Reader.reader;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -18,7 +19,7 @@ public class ReaderTest {
     }
 
     Reader<Environment, String> getSettingValue() {
-        return Reader.of(r -> r.settingValue);
+        return reader(r -> r.settingValue);
     }
 
     @Test

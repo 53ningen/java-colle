@@ -6,6 +6,8 @@ import javax.annotation.Nonnull;
 import java.util.function.Function;
 
 import static com.github.gomi.javacolle.ImmutableList.prepend;
+import static com.github.gomi.javacolle.State.state;
+import static com.github.gomi.javacolle.Tuple.tuple;
 
 public class IntStack {
 
@@ -35,28 +37,28 @@ public class IntStack {
         return IntStack.of(ImmutableList.of(values));
     }
 
-    public static Function<IntStack, Tuple<Integer, IntStack>> pop = s -> Tuple.of(s.stack.head(), IntStack.of(s.stack.tail()));
+    public static Function<IntStack, Tuple<Integer, IntStack>> pop = s -> tuple(s.stack.head(), IntStack.of(s.stack.tail()));
 
-    public static State<IntStack, Integer> sPop = State.of(s -> Tuple.of(s.stack.head(), IntStack.of(s.stack.tail())));
+    public static State<IntStack, Integer> sPop = state(s -> tuple(s.stack.head(), IntStack.of(s.stack.tail())));
 
-    public static Function<IntStack, Tuple<Integer, IntStack>> peek = s -> Tuple.of(s.stack.head(), s);
+    public static Function<IntStack, Tuple<Integer, IntStack>> peek = s -> tuple(s.stack.head(), s);
 
-    public static State<IntStack, Integer> sPeek = State.of(s -> Tuple.of(s.stack.head(), s));
+    public static State<IntStack, Integer> sPeek = state(s -> tuple(s.stack.head(), s));
 
-    public static Function<Integer, Function<IntStack, Tuple<Tuple0, IntStack>>> push = a -> s -> Tuple.of(Tuple0.unit, IntStack.of(prepend(a, s.stack)));
+    public static Function<Integer, Function<IntStack, Tuple<Tuple0, IntStack>>> push = a -> s -> tuple(Tuple0.unit, IntStack.of(prepend(a, s.stack)));
 
-    public static Function<Integer, State<IntStack, Tuple0>> sPush = a -> State.of(s -> Tuple.of(Tuple0.unit, IntStack.of(prepend(a, s.stack))));
+    public static Function<Integer, State<IntStack, Tuple0>> sPush = a -> state(s -> tuple(Tuple0.unit, IntStack.of(prepend(a, s.stack))));
 
     public static Tuple<Integer, IntStack> pop(@Nonnull final IntStack intStack) {
-        return Tuple.of(intStack.stack.head(), of(intStack.stack.tail()));
+        return tuple(intStack.stack.head(), of(intStack.stack.tail()));
     }
 
     public static Tuple<Tuple0, IntStack> push(@Nonnull final Integer a, final IntStack intStack) {
-        return Tuple.of(Tuple0.unit, of(prepend(a, intStack.stack)));
+        return tuple(Tuple0.unit, of(prepend(a, intStack.stack)));
     }
 
     public static Tuple<Integer, IntStack> peek(@Nonnull final IntStack intStack) {
-        return Tuple.of(intStack.stack.head(), intStack);
+        return tuple(intStack.stack.head(), intStack);
     }
 
     public static <A, B> Function<IntStack, Tuple<B, IntStack>> flatMap(final Function<IntStack, Tuple<A, IntStack>> h, final Function<IntStack, Tuple<B, IntStack>> f) {
@@ -64,7 +66,7 @@ public class IntStack {
     }
 
     public static <A, B> State<IntStack, B> flatMap(final State<IntStack, A> h, final State<IntStack, B> f) {
-        return State.of(flatMap(h.runState(), f.runState()));
+        return state(flatMap(h.runState(), f.runState()));
     }
 
     @Override

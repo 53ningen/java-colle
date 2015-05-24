@@ -21,12 +21,12 @@ public class TupleTest {
     @Test
     public void testUncurry() throws Exception {
         final Function<Double, Function<String, Double>> function = a -> b -> a;
-        assertThat(uncurry(function).apply(Tuple.of(0d, "string")), is(0d));
+        assertThat(uncurry(function).apply(Tuple.tuple(0d, "string")), is(0d));
     }
 
     @Test
     public void testSwap() throws Exception {
-        assertThat(swap(Tuple.of(0d, "string")), is(Tuple.of("string", 0d)));
+        assertThat(swap(Tuple.tuple(0d, "string")), is(Tuple.tuple("string", 0d)));
     }
 
 }

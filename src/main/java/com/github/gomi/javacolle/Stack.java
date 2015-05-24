@@ -2,6 +2,9 @@ package com.github.gomi.javacolle;
 
 import com.github.gomi.javacolle.data.tuple.Tuple0;
 
+import static com.github.gomi.javacolle.State.state;
+import static com.github.gomi.javacolle.Tuple.tuple;
+
 public class Stack<T> {
 
     private final ImmutableList<T> stack;
@@ -24,24 +27,22 @@ public class Stack<T> {
     }
 
     public static <A> State<Stack<A>, A> pop() {
-        return State.of(s -> Tuple.of(s.stack.head(), Stack.of(s.stack.tail())));
+        return state(s -> tuple(s.stack.head(), Stack.of(s.stack.tail())));
     }
 
     public static <A> State<Stack<A>, A> peek() {
-        return State.of(s -> Tuple.of(s.stack.head(), s));
+        return state(s -> tuple(s.stack.head(), s));
     }
 
     public static <A> State<Stack<A>, Tuple0> push(final A a) {
-        return State.of(s -> Tuple.of(Tuple0.unit, Stack.of(ImmutableList.prepend(a, s.stack))));
+        return state(s -> tuple(Tuple0.unit, Stack.of(ImmutableList.prepend(a, s.stack))));
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (!(o instanceof Stack)) return false;
-
-        Stack stack1 = (Stack) o;
-
+        final Stack stack1 = (Stack) o;
         if (!stack.equals(stack1.stack)) return false;
 
         return true;

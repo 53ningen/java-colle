@@ -6,7 +6,7 @@ public interface Reader<R, T> {
 
     Function<R, T> runReader();
 
-    static <R, T> Reader<R, T> of(final Function<R, T> runReader) {
+    static <R, T> Reader<R, T> reader(final Function<R, T> runReader) {
         return new Reader<R, T>() {
             @Override
             public Function<R, T> runReader() {
@@ -16,7 +16,7 @@ public interface Reader<R, T> {
     }
 
     default <A> Reader<R, A> flatMap(final Reader<R, A> f) {
-        return of(r -> f.runReader().apply(r));
+        return reader(r -> f.runReader().apply(r));
     }
 
 }

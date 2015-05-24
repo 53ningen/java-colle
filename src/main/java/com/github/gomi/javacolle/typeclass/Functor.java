@@ -3,10 +3,10 @@ package com.github.gomi.javacolle.typeclass;
 import java.util.function.Function;
 
 /**
- * The Functor class is used for types that can be mapped over. Instances of Functor should satisfy the following laws:
+ * The Functor class is used for types that can be mapped over. Instances reader Functor should satisfy the following laws:
  * fmap id  ==  id
  * fmap (f . g)  ==  fmap f . fmap g
- * The instances of Functor for lists, Maybe and IO satisfy these laws.
+ * The instances reader Functor for lists, Maybe and IO satisfy these laws.
  */
 public interface Functor<T> {
 
