@@ -6,6 +6,7 @@ java-colle
 
 * ジャ・バ・コ・レ
 * 色々なコレクションなどを自前で実装していきます
+* 結構おかしなところがあると思います
 
 ### 実装したもの
 
@@ -14,4 +15,8 @@ java-colle
 * Tuple2
 * ImmutableList
 * Maybe
+* Stack
 * IntStack
+* State
+* Reader
+* Functor
