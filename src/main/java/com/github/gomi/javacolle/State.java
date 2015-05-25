@@ -23,12 +23,28 @@ public interface State<S, A> {
         });
     }
 
+    static <S, A, B> Function<S, Tuple<B, S>> _flatMap(final Function<S, Tuple<A, S>> h, final Function<A, Function<S, Tuple<B, S>>> f) {
+        return s -> {
+            final Tuple<A, S> res = h.apply(s);
+            final Function<S, Tuple<B, S>> sta = f.apply(res.fst());
+            return sta.apply(res.snd());
+        };
+    }
+
     default <B> State<S, B> flatMap(final Function<A, State<S, B>> f) {
         return state(s -> {
             final Tuple<A, S> res = runState().apply(s);
             final State<S, B> sta = f.apply(res.fst());
             return sta.runState().apply(res.snd());
         });
+    }
+
+    default <B> Function<S, Tuple<B, S>> _flatMap(final Function<A, Function<S, Tuple<B, S>>> f) {
+        return s -> {
+            final Tuple<A, S> res = runState().apply(s);
+            final Function<S, Tuple<B, S>> sta = f.apply(res.fst());
+            return sta.apply(res.snd());
+        };
     }
 
 }
