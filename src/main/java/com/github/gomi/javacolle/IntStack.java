@@ -61,14 +61,6 @@ public class IntStack {
         return tuple(intStack.stack.head(), intStack);
     }
 
-    public static <A, B> Function<IntStack, Tuple<B, IntStack>> flatMap(final Function<IntStack, Tuple<A, IntStack>> h, final Function<IntStack, Tuple<B, IntStack>> f) {
-        return t -> f.apply(h.apply(t).snd());
-    }
-
-    public static <A, B> State<IntStack, B> flatMap(final State<IntStack, A> h, final State<IntStack, B> f) {
-        return state(flatMap(h.runState(), f.runState()));
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

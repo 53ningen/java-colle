@@ -15,12 +15,20 @@ public interface State<S, A> {
         };
     }
 
-    default <B> State<S, B> flatMap(final State<S, B> f) {
-        return State.state(t -> f.runState().apply(this.runState().apply(t).snd()));
+    static <S, A, B> State<S, B> flatMap(final State<S, A> h, final Function<A, State<S, B>> f) {
+        return state(s -> {
+            final Tuple<A, S> res = h.runState().apply(s);
+            final State<S, B> sta = f.apply(res.fst());
+            return sta.runState().apply(res.snd());
+        });
     }
 
-    default <B> State<S, B> flatMap(final Function<S, Tuple<B, S>> f) {
-        return flatMap(state(f));
+    default <B> State<S, B> flatMap(final Function<A, State<S, B>> f) {
+        return state(s -> {
+            final Tuple<A, S> res = runState().apply(s);
+            final State<S, B> sta = f.apply(res.fst());
+            return sta.runState().apply(res.snd());
+        });
     }
 
 }

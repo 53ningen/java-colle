@@ -38,6 +38,8 @@ public class Stack<T> {
         return state(s -> tuple(Tuple0.unit, Stack.of(ImmutableList.prepend(a, s.stack))));
     }
 
+    //public static <A, B> State<Stack<B>> flatMap(final Function<A, State<Stack<B>, B>> f) {
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
