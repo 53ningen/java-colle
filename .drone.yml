@@ -1,3 +1,0 @@
-image: bradrydzewski/java:openjdk8
-script:
-  - ./gradlew test
