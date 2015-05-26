@@ -49,4 +49,22 @@ public class ImmutableListTest {
         get(null, 0);
     }
 
+    @Test
+    public void testFmap() {
+        assertThat(of(1, 2, 3).fmap(x -> 2 * x), is(of(2, 4, 6)));
+        assertThat(of(1, 2, 3).fmap(x -> "No." + 2 * x), is(of("No.2", "No.4", "No.6")));
+    }
+
+    @Test
+    public void testFlatMap() {
+        assertThat(of(1, 2, 3).flatMap(x -> of(2 * x)), is(of(2, 4, 6)));
+        assertThat(of(1, 2, 3).flatMap(x -> of(x, -x)), is(of(1, -1, 2, -2, 3, -3)));
+        assertThat(
+                of(1, 2)
+                        .flatMap(x -> of(x, -x)
+                                .flatMap(y -> of(x + y, x - y))),
+                is(of(2, 0, 0, 2, 4, 0, 0, 4))
+        );
+    }
+
 }

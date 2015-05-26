@@ -1,5 +1,7 @@
 package com.github.gomi.javacolle;
 
+import java.util.function.Function;
+
 public interface ImmutableList<A> {
 
     default boolean isEmpty() {
@@ -27,6 +29,33 @@ public interface ImmutableList<A> {
         return 0;
     }
 
+    default <B> ImmutableList<B> fmap(final Function<A, B> f) {
+        return fmap(f, this);
+    }
+
+    static <A, B> ImmutableList<B> fmap(final Function<A, B> f, final ImmutableList<A> fa) {
+        if (fa.isEmpty()) return empty();
+        else return prepend(f.apply(fa.head()), fmap(f, fa.tail()));
+    }
+
+    static <A> ImmutableList<A> join(final ImmutableList<A> a, final ImmutableList<A> b) {
+        if (a.isEmpty()) return b;
+        else return SinglyLinkedList.Cons.of(a.head(), join(a.tail(), b));
+    }
+
+    static <A> ImmutableList<A> concat(final ImmutableList<ImmutableList<A>> a) {
+        if (a.isEmpty()) return empty();
+        else return join(a.head(), concat(a.tail()));
+    }
+
+    default <B> ImmutableList<B> flatMap(final Function<A, ImmutableList<B>> f) {
+        return flatMap(this, f);
+    }
+
+    default <A, B> ImmutableList<B> flatMap(final ImmutableList<A> ma, final Function<A, ImmutableList<B>> f) {
+        return concat(fmap(f, ma));
+    }
+
     @SafeVarargs
     static <A> ImmutableList<A> of(A... elements) {
         return SinglyLinkedList.of(elements);
@@ -34,6 +63,10 @@ public interface ImmutableList<A> {
 
     static <A> ImmutableList<A> prepend(final A x, final ImmutableList<A> xs) {
         return SinglyLinkedList.Cons.of(x, xs);
+    }
+
+    static <A> ImmutableList<A> empty() {
+        return SinglyLinkedList.nil();
     }
 
     /**
